@@ -2,6 +2,7 @@ from fastapi import Depends, HTTPException,APIRouter
 from sqlalchemy.orm import Session
 from depedency import get_db
 from appsql import schemas
+from typing import List
 from cruds import crud_operator
 
 router = APIRouter()

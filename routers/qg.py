@@ -1,5 +1,6 @@
 from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
+from typing import List
 from depedency import get_db
 from appsql import schemas
 from cruds import crud_qg

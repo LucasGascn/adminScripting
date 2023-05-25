@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from depedency import get_db
 from appsql import schemas
 from cruds import crud_weapon
+from typing import List
+
 
 router = APIRouter()
 
