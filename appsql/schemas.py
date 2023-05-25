@@ -7,17 +7,17 @@ class OperatorBase(BaseModel):
 
 
 class OperatorUpdate(OperatorBase):
-    weapon_id: int | None = None
-    gq_id: int | None = None
-    mission_id: int | None = None
-    name: str | None = None
-    nationality: str | None = None
+    weapon_id: int or None = None
+    gq_id: int or None = None
+    mission_id: int or None = None
+    name: str or None = None
+    nationality: str or None = None
 
 
 class OperatorCreate(OperatorBase):
     weapon_id: int
     gq_id: int
-    mission_id: int | None = None
+    mission_id: int or None = None
     name: str
     nationality: str
 
@@ -25,8 +25,8 @@ class OperatorCreate(OperatorBase):
 class Operator(OperatorBase):
     id: int
     weapon_id: int
-    gq_id: int | None
-    mission_id: int | None
+    gq_id: int or None
+    mission_id: int or None
     name: str
     nationality: str
 
@@ -47,8 +47,8 @@ class WeaponCreate(WeaponBase):
 
 
 class WeaponUpdate(WeaponBase):
-    name: str | None = None
-    type: str | None = None
+    name: str or None = None
+    type: str or None = None
 
 
 class Weapon(WeaponBase):
@@ -85,18 +85,18 @@ class MissionBase(BaseModel):
 
 class MissionCreate(MissionBase):
     target: str
-    vehicule_id: int | None
+    vehicule_id: int or None
 
 
 class MissionUpdate(MissionBase):
-    target: str | None = None
-    vehicule_id: int | None = None
+    target: str or None = None
+    vehicule_id: int or None = None
 
 
 class Mission(MissionBase):
     id: int
     target: str
-    vehicule_id: int | None
+    vehicule_id: int or None
 
     class Config:
         orm_mode = True
@@ -113,8 +113,8 @@ class VehiculeCreate(VehiculeBase):
 
 
 class VehiculeUpdate(VehiculeBase):
-    name: str | None = None
-    type: str | None = None
+    name: str or None = None
+    type: str or None = None
 
 
 class Vehicule(VehiculeBase):
