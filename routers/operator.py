@@ -72,7 +72,7 @@ def read_operator(operator_id: int, db: Session = Depends(get_db)):
 def read_operator_weapon(weapon_id: int, db: Session = Depends(get_db)):
     start_time = time.time()
     db_operator = crud_operator.get_operator_weapon(db, weapon_id=weapon_id)
-    p = influxdb_client.Point("backend_measurement").tag("time", "operator").field("get_operator_by_weapon", str(time.time() - start_time))
+    p = influxdb_client.Point("backend_measurement").tag("total_time", "operator").field("get_operator_by_weapon", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     return db_operator
 
@@ -82,7 +82,7 @@ def read_operator_weapon(weapon_id: int, db: Session = Depends(get_db)):
 def read_operator_weapon(qg_id: int, db: Session = Depends(get_db)):
     start_time = time.time()
     db_operator = crud_operator.get_operator_qg(db, qg_id=qg_id)
-    p = influxdb_client.Point("backend_measurement").tag("time", "operator").field("get_operator_by_qg", str(time.time() - start_time))
+    p = influxdb_client.Point("backend_measurement").tag("total_time", "operator").field("get_operator_by_qg", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     return db_operator
 
@@ -91,7 +91,7 @@ def read_operator_weapon(qg_id: int, db: Session = Depends(get_db)):
 def read_operator_mission(mission_id: int, db: Session = Depends(get_db)):
     start_time = time.time()
     db_operator = crud_operator.get_operator_mission(db, mission_id=mission_id)
-    p = influxdb_client.Point("backend_measurement").tag("time", "operator").field("get_operator_by_mission", str(time.time() - start_time))
+    p = influxdb_client.Point("backend_measurement").tag("total_time", "operator").field("get_operator_by_mission", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     return db_operator
 
@@ -101,7 +101,7 @@ def read_operator_mission(mission_id: int, db: Session = Depends(get_db)):
 def read_operator_name(name: str, db: Session = Depends(get_db)):
     start_time = time.time()
     db_operator = crud_operator.get_operator_name(db, name=name)
-    p = influxdb_client.Point("backend_measurement").tag("time", "operator").field("get_operator_by_name", str(time.time() - start_time))
+    p = influxdb_client.Point("backend_measurement").tag("total_time", "operator").field("get_operator_by_name", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     return db_operator
 
@@ -111,7 +111,7 @@ def read_operator_name(name: str, db: Session = Depends(get_db)):
 def read_operator_nationality(nationality: str, db: Session = Depends(get_db)):
     start_time = time.time()
     db_operator = crud_operator.get_operator_nationality(db, nationality=nationality)
-    p = influxdb_client.Point("backend_measurement").tag("time", "operator").field("get_operator_by_nationality", str(time.time() - start_time))
+    p = influxdb_client.Point("backend_measurement").tag("total_time", "operator").field("get_operator_by_nationality", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     return db_operator
 
@@ -121,7 +121,7 @@ def read_operator_nationality(nationality: str, db: Session = Depends(get_db)):
 def delete_operator(operator_id: int, db: Session = Depends(get_db)):
     start_time = time.time()
     db_operator = crud_operator.delete_operator(db, operator_id=operator_id)
-    p = influxdb_client.Point("backend_measurement").tag("time", "operator").field("delete_operator", str(time.time() - start_time))
+    p = influxdb_client.Point("backend_measurement").tag("total_time", "operator").field("delete_operator", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     return "Operator eliminated"
 
@@ -131,7 +131,7 @@ def delete_operator(operator_id: int, db: Session = Depends(get_db)):
 def update_operator(operator_id: int, operator: schemas.OperatorUpdate, db: Session = Depends(get_db)):
     start_time = time.time()
     db_operator = crud_operator.patch_operator(db=db, operator_id=operator_id,  operator=operator)
-    p = influxdb_client.Point("backend_measurement").tag("time", "operator").field("patch_operator", str(time.time() - start_time))
+    p = influxdb_client.Point("backend_measurement").tag("total_time", "operator").field("patch_operator", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     return db_operator
 
@@ -141,6 +141,6 @@ def update_operator(operator_id: int, operator: schemas.OperatorUpdate, db: Sess
 def change_operator(operator: schemas.OperatorCreate, operator_id: int, db: Session = Depends(get_db)):
     start_time = time.time()
     db_operator = crud_operator.put_operator(db, operator_id=operator_id, operator=operator)
-    p = influxdb_client.Point("backend_measurement").tag("time", "operator").field("put_operator", str(time.time() - start_time))
+    p = influxdb_client.Point("backend_measurement").tag("total_time", "operator").field("put_operator", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     return db_operator

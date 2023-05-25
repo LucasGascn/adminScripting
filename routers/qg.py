@@ -31,7 +31,7 @@ router = APIRouter()
 def create_qg(qg: schemas.QGCreate, db: Session = Depends(get_db)):
     start_time = time.time()
     create_a_qg = crud_qg.create_qg(db=db, qg=qg)
-    p = influxdb_client.Point("backend_measurement").tag("time", "qg").field("create_qg", str(time.time() - start_time))
+    p = influxdb_client.Point("backend_measurement").tag("total_time", "qg").field("create_qg", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     return create_a_qg
 
@@ -41,7 +41,7 @@ def create_qg(qg: schemas.QGCreate, db: Session = Depends(get_db)):
 def read_qg(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     start_time = time.time()
     qg = crud_qg.get_qg(db, skip=skip, limit=limit)
-    p = influxdb_client.Point("backend_measurement").tag("time", "qg").field("get_qg", str(time.time() - start_time))
+    p = influxdb_client.Point("backend_measurement").tag("total_time", "qg").field("get_qg", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     return qg
 
@@ -51,7 +51,7 @@ def read_qg(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 def delete_qg(qg_id: int, db: Session = Depends(get_db)):
     start_time = time.time()
     db_qg = crud_qg.delete_qg(db, qg_id=qg_id)
-    p = influxdb_client.Point("backend_measurement").tag("time", "qg").field("delete_qg", str(time.time() - start_time))
+    p = influxdb_client.Point("backend_measurement").tag("total_time", "qg").field("delete_qg", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     return "Quarter General deconstruct"
 
@@ -61,7 +61,7 @@ def delete_qg(qg_id: int, db: Session = Depends(get_db)):
 def change_qg(qg: schemas.QGCreate, qg_id: int, db: Session = Depends(get_db)):
     start_time = time.time()
     db_qg = crud_qg.put_qg(db, qg_id=qg_id, qg=qg)
-    p = influxdb_client.Point("backend_measurement").tag("time", "qg").field("put_qg", str(time.time() - start_time))
+    p = influxdb_client.Point("backend_measurement").tag("total_time", "qg").field("put_qg", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     return db_qg
 
