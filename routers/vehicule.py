@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 # GET Function
-@router.get("/vehicules/", response_model=list[schemas.Vehicule])
+@router.get("/vehicules/", response_model=List[schemas.Vehicule])
 def read_vehicule(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     vehicule = crud_vehicule.get_vehicule(db, skip=skip, limit=limit)
     return vehicule
