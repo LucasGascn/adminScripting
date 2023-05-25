@@ -1,6 +1,7 @@
 from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
 from depedency import get_db
+from typing import List
 from appsql import schemas
 from cruds import crud_mission
 
@@ -14,7 +15,7 @@ def create_mission(mission: schemas.MissionCreate, db: Session = Depends(get_db)
 
 
 # GET Function
-@router.get("/missions/", response_model=list[schemas.Mission])
+@router.get("/missions/", response_model=List[schemas.Mission])
 def read_mission(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     mission = crud_mission.get_mission(db, skip=skip, limit=limit)
     return mission

@@ -2,6 +2,7 @@ from fastapi import Depends, HTTPException,APIRouter
 from sqlalchemy.orm import Session
 from depedency import get_db
 from appsql import schemas
+from typing import List
 from cruds import crud_operator
 
 router = APIRouter()
@@ -27,7 +28,7 @@ def create_operator(operator: schemas.OperatorCreate, db: Session = Depends(get_
 
 
 # GET function
-@router.get("/operators/", response_model=list[schemas.Operator])
+@router.get("/operators/", response_model=List[schemas.Operator])
 def read_operators(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     operators = crud_operator.get_operators(db, skip=skip, limit=limit)
     return operators
@@ -43,34 +44,34 @@ def read_operator(operator_id: int, db: Session = Depends(get_db)):
 
 
 # By Weapon
-@router.get("/operators/filter-weapon/{weapon_id}", response_model=list[schemas.Operator])
+@router.get("/operators/filter-weapon/{weapon_id}", response_model=List[schemas.Operator])
 def read_operator_weapon(weapon_id: int, db: Session = Depends(get_db)):
     db_operator = crud_operator.get_operator_weapon(db, weapon_id=weapon_id)
     return db_operator
 
 
 # By Quarter General
-@router.get("/operators/filter-qg/{qg_id}", response_model=list[schemas.Operator])
+@router.get("/operators/filter-qg/{qg_id}", response_model=List[schemas.Operator])
 def read_operator_weapon(qg_id: int, db: Session = Depends(get_db)):
     db_operator = crud_operator.get_operator_qg(db, qg_id=qg_id)
     return db_operator
 
 # By Mission
-@router.get("/operators/filter-mission/{mission_id}", response_model=list[schemas.Operator])
+@router.get("/operators/filter-mission/{mission_id}", response_model=List[schemas.Operator])
 def read_operator_mission(mission_id: int, db: Session = Depends(get_db)):
     db_operator = crud_operator.get_operator_mission(db, mission_id=mission_id)
     return db_operator
 
 
 # By Name
-@router.get("/operators/filter-name/{name}", response_model=list[schemas.Operator])
+@router.get("/operators/filter-name/{name}", response_model=List[schemas.Operator])
 def read_operator_name(name: str, db: Session = Depends(get_db)):
     db_operator = crud_operator.get_operator_name(db, name=name)
     return db_operator
 
 
 # By Nationality
-@router.get("/operators/filter-nationality/{nationality}", response_model=list[schemas.Operator])
+@router.get("/operators/filter-nationality/{nationality}", response_model=List[schemas.Operator])
 def read_operator_nationality(nationality: str, db: Session = Depends(get_db)):
     db_operator = crud_operator.get_operator_nationality(db, nationality=nationality)
     return db_operator

@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from depedency import get_db
 from appsql import schemas
 from cruds import crud_weapon
+from typing import List
+
 
 router = APIRouter()
 
@@ -14,7 +16,7 @@ def create_weapon(weapon: schemas.WeaponCreate, db: Session = Depends(get_db)):
 
 
 # POST Function
-@router.get("/weapons/", response_model=list[schemas.Weapon])
+@router.get("/weapons/", response_model=List[schemas.Weapon])
 def read_weapon(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     weapons = crud_weapon.get_weapon(db, skip=skip, limit=limit)
     return weapons

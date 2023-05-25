@@ -1,5 +1,6 @@
 from fastapi import Depends, APIRouter
 from sqlalchemy.orm import Session
+from typing import List
 from depedency import get_db
 from appsql import schemas
 from cruds import crud_qg
@@ -14,7 +15,7 @@ def create_qg(qg: schemas.QGCreate, db: Session = Depends(get_db)):
 
 
 # GET Function
-@router.get("/qg/", response_model=list[schemas.QG])
+@router.get("/qg/", response_model=List[schemas.QG])
 def read_qg(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     qg = crud_qg.get_qg(db, skip=skip, limit=limit)
     return qg
