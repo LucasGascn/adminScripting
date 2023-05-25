@@ -5,13 +5,27 @@ from appsql import schemas
 from cruds import crud_vehicule
 from typing import List
 import time
-#from uvicorn.config import LOGGING_CONFIG
+import influxdb_client
+from influxdb_client.client.write_api import SYNCHRONOUS
+
+bucket = "projectone"
+org = "project"
+token = "BKjW5CQlPW-x0xg8N2rRXRaFLlEMPaPMPOCXRfMXcUf9FJqTt3oWjxGeaozalW3IG2nitrvtNc7mmN1vhdh_RA=="
+# Store the URL of your InfluxDB instance
+url="http://192.168.64.17:8086"
+
+
+client = influxdb_client.InfluxDBClient(
+   url=url,
+   token=token,
+   org=org
+)
+
+write_api = client.write_api(write_options=SYNCHRONOUS)
 
 router = APIRouter()
 
-# LOGGING_CONFIG["formatters"]["access"]["fmt"] = (
-#         "%(asctime)s " + LOGGING_CONFIG["formatters"]["access"]["fmt"]
-# )
+
 # GET Function
 @router.get("/vehicules/", response_model=List[schemas.Vehicule])
 def read_vehicule(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):

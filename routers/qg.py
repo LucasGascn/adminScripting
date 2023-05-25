@@ -5,6 +5,24 @@ from depedency import get_db
 from appsql import schemas
 from cruds import crud_qg
 import time
+import influxdb_client
+from influxdb_client.client.write_api import SYNCHRONOUS
+
+bucket = "projectone"
+org = "project"
+token = "BKjW5CQlPW-x0xg8N2rRXRaFLlEMPaPMPOCXRfMXcUf9FJqTt3oWjxGeaozalW3IG2nitrvtNc7mmN1vhdh_RA=="
+# Store the URL of your InfluxDB instance
+url="http://192.168.64.17:8086"
+
+
+client = influxdb_client.InfluxDBClient(
+   url=url,
+   token=token,
+   org=org
+)
+
+write_api = client.write_api(write_options=SYNCHRONOUS)
+
 router = APIRouter()
 
 
