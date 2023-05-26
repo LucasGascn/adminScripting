@@ -56,6 +56,7 @@ def read_mission(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
         for record in table.records:
             results.append(record.get_value())
 
+    print(len(results))
     if(len(results) > 0):
         query = 'from(bucket:"projectone")\
         |> range(start: -60m)\
