@@ -45,14 +45,32 @@ def read_mission(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
     write_api.write(bucket=bucket, org=org, record=p)
     query_api = client.query_api()
 
-    query = ' from(bucket:"projectone")\
-    |> range(start: -60m)\
-    |> filter(fn: (r) => r["_measurement"] == "backend_measurement")\
-    |> filter(fn: (r) => r["_field"] == "get_missions")\
-    |> filter(fn: (r) => r["total_time"] == "mission")'
-
+    query = 'from(bucket:"projectone")\
+     |> range(start: -60m)\
+     |> filter(fn: (r) => r["_measurement"] == "backend_measurement")\
+     |> filter(fn: (r) => r["GET"] == "mission")\
+     |> filter(fn: (r) => r["total_time"] == "mission")'
     result = query_api.query(org=org, query=query)
+    results = []
+
+    for table in result:
+        for record in table.records:
+            results.append(record.get_value())
+
+    # if(len(results) > 0):
+    #     query = 'from(bucket:"projectone")\
+    #     |> range(start: -60m)\
+    #     |> filter(fn: (r) => r["_measurement"] == "backend_measurement_endpoint")\
+    #     |> filter(fn: (r) => r["_field"] == "get_missions")\
+    #     |> filter(fn: (r) => r["total_time"] == "mission")\
+    #     |> map(fn: (r) => ({r with _value: r._value + 1}))'
+    #     query_api.query(org=org, query=query)
+    # else:
+    #     p = influxdb_client.Point("backend_measurement_endpoint").tag("GET", "mission").field("get_missions", 1)
+    #     write_api.write(bucket=bucket, org=org, record=p)
+
     print(result)
+    print(results)
     return mission
 
 
