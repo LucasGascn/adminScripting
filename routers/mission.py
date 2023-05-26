@@ -44,12 +44,12 @@ def read_mission(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
     p = influxdb_client.Point("backend_measurement").tag("total_time", "mission").field("get_missions", str(time.time() - start_time))
     write_api.write(bucket=bucket, org=org, record=p)
     query_api = client.query_api()
-    query = 'from(bucket:"projectone")\
+
+    query = ' from(bucket:"projectone")\
     |> range(start: -60m)\
-    |> filter(fn:(r) => r._measurement == "backend_measurement")\
-    |> filter(fn:(r) => r._field == "get"_missions)\
-    '
-    # |> filter(fn:(r) => r._total_time == "mission")
+    |> filter(fn: (r) = > r["_field"] == "get_missions")\
+    |>  filter(fn: (r) = > r["total_time"] == "mission")'
+
     result = query_api.query(org=org, query=query)
     print(result)
     return mission
