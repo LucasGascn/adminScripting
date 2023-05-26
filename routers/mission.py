@@ -62,7 +62,6 @@ def read_mission(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
         |> range(start: -60m)\
         |> filter(fn: (r) => r["_measurement"] == "backend_measurement_endpoint")\
         |> filter(fn: (r) => r["_field"] == "get_missions")\
-        |> filter(fn: (r) => r["total_time"] == "mission")\
         |> map(fn: (r) => ({r with _value: r._value + 1}))'
         query_api.query(org=org, query=query)
     else:
