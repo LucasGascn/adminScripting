@@ -48,8 +48,8 @@ def read_mission(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
     query = ' from(bucket:"projectone")\
     |> range(start: -60m)\
     |> filter(fn: (r) => r["_measurement"] == "backend_measurement")\
-    |> filter(fn: (r) = > r["_field"] == "get_missions")\
-    |>  filter(fn: (r) = > r["total_time"] == "mission")'
+    |> filter(fn: (r) => r["_field"] == "get_missions")\
+    |> filter(fn: (r) => r["total_time"] == "mission")'
 
     result = query_api.query(org=org, query=query)
     print(result)
